@@ -13,7 +13,7 @@ request.interceptors.request.use(
   async config => {
     const { accessToken, refreshToken } = getTokens() || {}; // 기본값 추가
     if (!refreshToken) {
-      window.location.href = '';
+      window.location.href = ''; // vercel 로그인 주소로 이동 예정
       return config;
     }
 
@@ -34,7 +34,7 @@ request.interceptors.request.use(
         return config;
       }
     } else {
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = `Bearer ${accessToken}`; // -> 이부분에서 헤더를 수정할 필요가 있음
     }
     return config;
   },
@@ -87,7 +87,7 @@ request.interceptors.response.use(
       // 로컬 스토리지에서 리프레시 토큰 삭제
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('accessToken'); // 엑세스 토큰도 삭제할 수 있습니다.
-      window.location.href = '';
+      window.location.href = ''; // vercel 로그인 주소로 이동 예정
 
       const queryClient = useQueryClient();
       queryClient.clear();
